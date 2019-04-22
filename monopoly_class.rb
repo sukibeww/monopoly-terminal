@@ -1,13 +1,22 @@
 class Player
-    attr_reader :name
-    attr_accessor :money, :property, :jail_status
+    attr_reader :name, :id 
+    attr_accessor :money, :property, :jail_status, :location
+
+    @@player_counter = 0 
     def initialize(name)
+        @@player_counter += 1 
         @name = name 
         @money = 4000
         @property = {} 
         @jail_status = false 
         @jail_time = 0 
+        @location = 0 
+        @id = "P#{@@player_counter.to_s()}"
     end
+
+    def lap() 
+        @money += 1000
+    end 
 
     def bribe
         if(@money > 300 && @jail_time >= 1) 
@@ -27,17 +36,75 @@ class Player
             end 
         end 
     end 
+
+    def buy_property(property)
+        if(@money >= property.buy_cost)
+            property_name_sym = property.name.to_sym
+            @property.merge!("#{property_name_sym}": property)
+        else 
+            puts "Not enought money" 
+        end 
+    end 
+
+    def toss_dice()
+        random_dice = rand(1..6) 
+        puts "You rolled #{random_dice}"
+        @location += random_dice 
+        if(@location > 23) 
+            @location -= 23 
+            lap() 
+        end 
+    end 
 end 
 
-class Property
+class Tile 
+    attr_accessor :player_in
+    def initialize 
+        @player_in = [] 
+    end 
+
+    def move_in(player)
+        puts "Move in Diagnostic : #{player.class}"
+        puts "Move in Diagnostic2 : #{@player_in.class}"
+        if(@player_in == nil) 
+            @player_in = [] 
+            @player_in.push(player)
+        else 
+            @player_in.push(player)
+        end 
+    end 
+    
+    def move_out(player)
+        @player_in.delete(player)
+    end 
+
+    def in?
+        player_inside = "" 
+        if(@player_in != nil) 
+            # puts "Diagnostic in? = #{player_in.class}"
+            # puts "Diagnostic in?3 = #{@player_in}"
+            @player_in.each do |player| 
+                if(player.is_a? Player)
+                    # puts "Diagnostic in?2 = #{player.class}"
+                    player_inside << player.id << " "
+                end 
+            end 
+        end 
+        return player_inside
+    end 
+
+end 
+
+class Property < Tile
     attr_reader :name, :id
     attr_accessor :rent, :buy_cost, :owner, :tier
     def initialize(name, buy_cost, id)
+        super()
         @name = name 
         @id = id
         @rent = buy_cost/2
         @buy_cost = buy_cost
-        @owner
+        @owner = nil 
         @tier = 1 
     end  
 
@@ -64,10 +131,11 @@ class Property
 
 end 
 
-class Chance 
+class Chance < Tile
     
     def initialize
-        @random_chance
+        super()
+        @random_chance = 0 
     end
 
     def draw()
@@ -111,9 +179,11 @@ class Chance
     end 
 end 
 
-class CommunityChest 
+class CommunityChest < Tile 
+
     def initialize
-        @random_community_chest
+        super()
+        @random_community_chest = 0 
     end
 
     def draw()
@@ -157,14 +227,20 @@ class CommunityChest
     end 
 end 
 
-class Start 
-    def lap(player) 
-        player.money += 1000
-        return player
+class Start < Tile 
+
+    def initialize()
+        super
     end 
+
 end 
 
-class Jail 
+class Jail < Tile
+
+    def initialize()
+        super
+    end 
+    
     def check_index(player, index) 
         case index 
         when 6 
@@ -190,7 +266,12 @@ class Jail
     end 
 end 
 
-class FreeParking 
+class FreeParking < Tile
+
+    def initialize
+        super()
+    end 
+
     def free_parking(player, player_position)
         #move player to the desired position 
     end 

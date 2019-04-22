@@ -72,7 +72,6 @@ def display_map(map)
     map_array.each do |box|
         map_output << box.to_s
     end 
-    print map_output
 end 
 
 def display_tile(tile)
@@ -80,53 +79,71 @@ def display_tile(tile)
     if(tile.is_a?(Property))
         box = TTY::Box.frame(
             width: 18,
-            height: 5,
+            height: 6,
             align: :center) do
                 """#{tile.id}
 tier:#{tile.tier}
 owner: P1
+#{tile.in?()}
                 """
             end 
         print box
     elsif tile.is_a?(Chance)
         box = TTY::Box.frame(
             width: 18,
-            height: 5,
+            height: 6,
             padding: 1,
             align: :center) do
-                """Chance"""
+                """Chance
+#{tile.in?()}"""
             end 
         print box
     elsif tile.is_a?(CommunityChest)
         box = TTY::Box.frame(
             width: 18,
-            height: 5,
+            height: 6,
             padding: 1,
             align: :center) do
                 """Community 
-Chest"""
+Chest
+#{tile.in?()}"""
             end 
         print box
     elsif tile.is_a?(Start)
         box = TTY::Box.frame(
             width: 18,
-            height: 5,
+            height: 6,
             padding: 1,
             align: :center) do
-                """Start"""
+                """Start
+#{tile.in?()}"""
             end 
         print box
     elsif tile.is_a?(Jail)
         box = TTY::Box.frame(
             width: 18,
-            height: 5,
+            height: 6,
             padding: 1,
             align: :center) do
-                """Jail"""
+                """Jail
+#{tile.in?()}"""
             end 
         print box
     end
     return box 
 end 
-    
-display_map(map)
+
+def game(player_list, map) 
+    game_boolean = true 
+    map[0].player_in << player_list
+    player_list.each do |player|
+        puts "#{player.name} turn"
+        map[player.location].move_out(player) 
+        player_step = player.toss_dice() 
+        puts "#{player.name} landed on a #{map[player.location].class} , #{player.location}"
+        map[player.location].move_in(player)
+    end 
+    display_map(map)
+end 
+
+game(player_list, map) 
