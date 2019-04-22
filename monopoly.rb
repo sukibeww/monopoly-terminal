@@ -1,4 +1,5 @@
 require_relative './monopoly_class.rb' 
+require 'tty-box' 
 
 #create player 
 player1 = Player.new("suki")
@@ -8,22 +9,22 @@ player4 = Player.new("michael")
 player_list = [player1, player2, player3, player4]
 
 #create property 
-darwin = Property.new("Darwin", 100)
-alice_spring = Property.new("Alice Spring", 120)
-stanley = Property.new("Stanley", 140)
-freycinet_national_park = Property.new("Freycinet National Park", 160)
-hobart = Property.new("Hobart", 200)
-margaret_river = Property.new("Margaret River", 220)
-broome = Property.new("Broome", 240)
-esperance = Property.new("Esperance", 260)
-pilip_island = Property.new("Philip Island", 300)
-melbourne = Property.new("Melbourne", 320)
-canberra = Property.new("Canberra", 340)
-questacon = Property.new("Questacon", 360)
-kangaroo_island = Property.new("Kangaroo Island", 420)
-gold_coast = Property.new("Gold Coast", 440)
-white_sundays = Property.new("White Sundays", 460)
-sydney = Property.new("Sydney", 500)
+darwin = Property.new("Darwin", 100, "DRW")
+alice_spring = Property.new("Alice Spring", 120, "ASP")
+stanley = Property.new("Stanley", 140, "DRW")
+freycinet_national_park = Property.new("Freycinet National Park", 160, "FNP")
+hobart = Property.new("Hobart", 200, "HBT")
+margaret_river = Property.new("Margaret River", 220, "MGR")
+broome = Property.new("Broome", 240, "BRM")
+esperance = Property.new("Esperance", 260, "ESP")
+pilip_island = Property.new("Philip Island", 300, "PLI")
+melbourne = Property.new("Melbourne", 320, "MLB")
+canberra = Property.new("Canberra", 340, "CNB")
+questacon = Property.new("Questacon", 360, "QTC")
+kangaroo_island = Property.new("Kangaroo Island", 420, "KGR")
+gold_coast = Property.new("Gold Coast", 440, "GCS")
+white_sundays = Property.new("White Sundays", 460, "WHS")
+sydney = Property.new("Sydney", 500, "SYD")
 
 #create chance and community class object 
 chance = Chance.new() 
@@ -62,3 +63,70 @@ map = [
     sydney
 ]
 
+def display_map(map) 
+    map_array = [] 
+    map.each do |tile| 
+        map_array.push(display_tile(tile))
+    end 
+    map_output = ""
+    map_array.each do |box|
+        map_output << box.to_s
+    end 
+    print map_output
+end 
+
+def display_tile(tile)
+    #determine the type of the object 
+    if(tile.is_a?(Property))
+        box = TTY::Box.frame(
+            width: 18,
+            height: 5,
+            align: :center) do
+                """#{tile.id}
+tier:#{tile.tier}
+owner: P1
+                """
+            end 
+        print box
+    elsif tile.is_a?(Chance)
+        box = TTY::Box.frame(
+            width: 18,
+            height: 5,
+            padding: 1,
+            align: :center) do
+                """Chance"""
+            end 
+        print box
+    elsif tile.is_a?(CommunityChest)
+        box = TTY::Box.frame(
+            width: 18,
+            height: 5,
+            padding: 1,
+            align: :center) do
+                """Community 
+Chest"""
+            end 
+        print box
+    elsif tile.is_a?(Start)
+        box = TTY::Box.frame(
+            width: 18,
+            height: 5,
+            padding: 1,
+            align: :center) do
+                """Start"""
+            end 
+        print box
+    elsif tile.is_a?(Jail)
+        box = TTY::Box.frame(
+            width: 18,
+            height: 5,
+            padding: 1,
+            align: :center) do
+                """Jail"""
+            end 
+        print box
+    end
+    return box 
+end 
+    
+display_map(map)

@@ -21,19 +21,20 @@ class Player
                 @jail_time = 0 
                 @jail_status = false
                 puts "You are free!"
-            end 
             when "2"
                 puts "You lose a turn" 
                 @jail_time -= 1
             end 
+        end 
     end 
 end 
 
 class Property
-    attr_reader :name
+    attr_reader :name, :id
     attr_accessor :rent, :buy_cost, :owner, :tier
-    def initialize(name, buy_cost)
+    def initialize(name, buy_cost, id)
         @name = name 
+        @id = id
         @rent = buy_cost/2
         @buy_cost = buy_cost
         @owner
@@ -74,10 +75,11 @@ class Chance
     end 
 
     def read(player)
+        @random_chance = draw() 
         case @random_chance
         when 1 
             chance_1(player) 
-        when 2 
+        when 2
             chance_2(player) 
         when 3 
             chance_3(player) 
@@ -119,6 +121,7 @@ class CommunityChest
     end 
 
     def read(player)
+        @random_community_chest = draw() 
         case @random_community_chest
         when 1 
             community_chest_1(player) 
@@ -155,16 +158,13 @@ class CommunityChest
 end 
 
 class Start 
-
     def lap(player) 
         player.money += 1000
         return player
     end 
-
 end 
 
 class Jail 
-
     def check_index(player, index) 
         case index 
         when 6 
