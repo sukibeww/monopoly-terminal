@@ -33,6 +33,7 @@ community_chest = CommunityChest.new()
 #create corner classes
 start = Start.new() 
 jail = Jail.new() 
+pass_jail = Jail.new() 
 free_parking = FreeParking.new() 
 
 #map 
@@ -55,7 +56,7 @@ map = [
     chance, 
     canberra,
     questacon,
-    jail,
+    pass_jail,
     kangaroo_island,
     gold_coast,
     community_chest,
@@ -65,13 +66,103 @@ map = [
 
 def display_map(map) 
     map_array = [] 
+    map_output = ""
+    empty_box = TTY::Box.frame(
+        width: 18,
+        height: 6,
+        align: :center,
+        border: {
+            type: :thick, 
+            top: false, 
+            bottom: false,
+            right: false,
+            left: false
+        })
     map.each do |tile| 
         map_array.push(display_tile(tile))
     end 
-    map_output = ""
-    map_array.each do |box|
-        map_output << box.to_s
+
+    #line one 
+    line_one_map = concatenate_map(map_array[0] , map_array[1])
+    counter = 2 
+    while(counter <= 6 )
+        line_one_map = concatenate_map(line_one_map, map_array[counter])
+        counter += 1 
     end 
+
+    #line two 
+    counter = 2
+    line_two_map = concatenate_map(map_array[23], empty_box.to_s)
+    while(counter <= 6) 
+        if(counter == 6 )
+            line_two_map = concatenate_map(line_two_map, map_array[7])
+        else
+            line_two_map =concatenate_map(line_two_map, empty_box) 
+        end 
+        counter += 1
+    end 
+
+    #line three 
+    counter = 2
+    line_three_map = concatenate_map(map_array[22], empty_box.to_s)
+    while(counter <= 6) 
+        if(counter == 6 )
+            line_three_map = concatenate_map(line_three_map, map_array[8])
+        else
+            line_three_map =concatenate_map(line_three_map, empty_box) 
+        end 
+        counter += 1
+    end 
+
+    #line four 
+    counter = 2
+    line_four_map = concatenate_map(map_array[21], empty_box.to_s)
+    while(counter <= 6) 
+        if(counter == 6 )
+            line_four_map = concatenate_map(line_four_map, map_array[9])
+        else
+            line_four_map =concatenate_map(line_four_map, empty_box) 
+        end 
+        counter += 1
+    end 
+
+    counter = 2
+    line_five_map = concatenate_map(map_array[20], empty_box.to_s)
+    while(counter <= 6) 
+        if(counter == 6 )
+            line_five_map = concatenate_map(line_five_map, map_array[10])
+        else
+            line_five_map =concatenate_map(line_five_map, empty_box) 
+        end 
+        counter += 1
+    end 
+
+    #line six
+    counter = 2
+    line_six_map = concatenate_map(map_array[19], empty_box.to_s)
+    while(counter <= 6) 
+        if(counter == 6 )
+            line_six_map = concatenate_map(line_six_map, map_array[9])
+        else
+            line_six_map =concatenate_map(line_six_map, empty_box) 
+        end 
+        counter += 1
+    end 
+
+    #line seven 
+    line_seven_map = concatenate_map(map_array[18] , map_array[17])
+    counter = 16
+    while(counter >= 12)
+        line_seven_map = concatenate_map(line_seven_map, map_array[counter])
+        counter -= 1 
+    end 
+    print line_one_map
+    print line_two_map
+    print line_three_map
+    print line_four_map
+    print line_five_map
+    print line_six_map
+    print line_seven_map 
 end 
 
 def display_tile(tile)
@@ -87,7 +178,6 @@ owner: P1
 #{tile.in?()}
                 """
             end 
-        print box
     elsif tile.is_a?(Chance)
         box = TTY::Box.frame(
             width: 18,
@@ -97,7 +187,6 @@ owner: P1
                 """Chance
 #{tile.in?()}"""
             end 
-        print box
     elsif tile.is_a?(CommunityChest)
         box = TTY::Box.frame(
             width: 18,
@@ -108,7 +197,6 @@ owner: P1
 Chest
 #{tile.in?()}"""
             end 
-        print box
     elsif tile.is_a?(Start)
         box = TTY::Box.frame(
             width: 18,
@@ -118,7 +206,6 @@ Chest
                 """Start
 #{tile.in?()}"""
             end 
-        print box
     elsif tile.is_a?(Jail)
         box = TTY::Box.frame(
             width: 18,
@@ -128,22 +215,57 @@ Chest
                 """Jail
 #{tile.in?()}"""
             end 
-        print box
-    end
-    return box 
+elsif tile.is_a?(FreeParking)
+    box = TTY::Box.frame(
+        width: 18,
+        height: 6,
+        padding: 1,
+        align: :center) do
+            """Free
+Parking
+#{tile.in?()}"""
+        end 
+    end 
+    return box.to_s 
 end 
 
+def tile_reader(tile) 
+    if(tile.is_a? Property)
+
+    elsif (tile.is_a? Start)
+
+    elsif (tile.is_a? Chance)
+
+    elsif (tile.is_a? CommunityChest)
+
+    elsif (tile.is_a? Jail)
+
+    elsif (tile.is_a? FreeParking) 
+
+    end 
+end 
+
+require 'pry'
 def game(player_list, map) 
-    game_boolean = true 
-    map[0].player_in << player_list
-    player_list.each do |player|
-        puts "#{player.name} turn"
-        map[player.location].move_out(player) 
-        player_step = player.toss_dice() 
-        puts "#{player.name} landed on a #{map[player.location].class} , #{player.location}"
-        map[player.location].move_in(player)
+    map[0].player_in = player_list
+    puts map[6].class
+    counter = 0
+    while(counter <= 3)
+        puts "#{player_list[0].name} turn"
+        origin = player_list[0].location
+        player_list[0].toss_dice() 
+        destination = player_list[0].location 
+        map[destination].move_in(player_list[0])
+        after_move = map[origin].move_out(player_list[0])
+        counter += 1 
     end 
     display_map(map)
+end 
+
+def concatenate_map(current_display, next_tile)
+    current_display_lines = current_display.lines 
+    next_tile_lines = next_tile.lines
+    return current_display_lines.each_with_object('') { |line, str| str << line.chomp << next_tile_lines.shift }
 end 
 
 game(player_list, map) 

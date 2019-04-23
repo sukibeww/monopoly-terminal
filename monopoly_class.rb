@@ -66,16 +66,20 @@ class Tile
     def move_in(player)
         puts "Move in Diagnostic : #{player.class}"
         puts "Move in Diagnostic2 : #{@player_in.class}"
-        if(@player_in == nil) 
-            @player_in = [] 
-            @player_in.push(player)
-        else 
-            @player_in.push(player)
-        end 
+        @player_in.push(player)
     end 
     
     def move_out(player)
-        @player_in.delete(player)
+        delete_index = -1 
+        result_array = @player_in
+        @player_in.each_with_index do |p, index|
+            if(p.name == player.name)
+                delete_index = index 
+                break 
+            end 
+        end 
+        result_array.delete_at(delete_index)
+        return result_array
     end 
 
     def in?
@@ -158,25 +162,38 @@ class Chance < Tile
         end 
     end 
 
-    def chance_1(player) 
-        #effect here 
-    end 
+    def chance_1(player)
+        puts "Jail Switch "
+        if jail_status == false
+        jail_status = true
+        puts " You are in jail now !"
+        else
+        jail_status = false
+        puts " Congratulations, you get bailed !"
+        end
+    end
 
     def chance_2(player)
-        #effect here 
-    end 
+        puts " Move forward up to 5 spaces"
+        player.location = player.location + 5
+
+    end
 
     def chance_3(player)
-        #effect here 
-    end 
+        puts "Make general repairs on all your property–For each house pay $25"
+        player.money -= player.property.length *25
+    end
 
     def chance_4(player)
-        #effect here 
-    end 
+        puts "put into jail"
+        jail.status = false
 
-    def chance_5(player) 
-        #effect here 
-    end 
+    end
+
+    def chance_5(player)
+        puts "pay owner a total ten times the amount of rent"
+        player.money -= player.money - 10 * rent
+    end
 end 
 
 class CommunityChest < Tile 
@@ -206,31 +223,36 @@ class CommunityChest < Tile
         end 
     end 
 
-    def community_chest_1(player) 
-        #effect here 
-    end 
+    def community_chest_1(player)
+        puts " Bank pays you dividend of $50"
+        player.money += 50
+    end
 
     def community_chest_2(player)
-        #effect here 
-    end 
+        puts "Doctor's fees – Pay $200"
+        player.money -= 200
+    end
 
     def community_chest_3(player)
-        #effect here 
-    end 
+        puts "It is your birthday Collect $10 from each player"
+        player.money += 4* 10
+    end
 
     def community_chest_4(player)
-        #effect here 
-    end 
+        puts "Pay School Fees of $120"
+        player.money -= 120
+    end
 
-    def community_chest_5(player) 
-        #effect here 
-    end 
+    def community_chest_5(player)
+        puts "You are assessed for street repairs – $40 per house, $115 per hotel"
+         #???????????????????????????
+    end
 end 
 
 class Start < Tile 
 
     def initialize()
-        super
+        super()
     end 
 
 end 
@@ -238,7 +260,8 @@ end
 class Jail < Tile
 
     def initialize()
-        super
+        super()
+        @player_in_jail = {} 
     end 
     
     def check_index(player, index) 
@@ -249,10 +272,6 @@ class Jail < Tile
             pass_by_jail() 
         end 
         return player 
-    end 
-
-    def initialize
-        @player_in_jail = {} 
     end 
 
     def go_to_jail(player)
