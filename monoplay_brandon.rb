@@ -1,82 +1,42 @@
 
 class Player
-attr_accessor :name, :money, :location :jail_status
+attr_accessor :name, :money, :location, :jail_status, :jail_time
     def initialize(name)
         @name = name
         @money = 4000
         @jail_status = false
-        # @property = {
-        #     melbourne: melbourne
-        # }
+        @jail_time = 0
+        @property = {}
         @location = 0
     end
+
     def toss_dice
         step = rand(1..6)
         @location = @location + step
         if(@location > 23)
             @location -= 23
-            lap()
+            @money += 1000
         end
     end
 
-    def lap()
-        @money += 1000
-    end
 
-    def buy_property(property,map)
-        if map[@location] = property and (@money >= property.buy_cost)
-            property_name_sym = property.name.to_sym
-            @property.merge!("#{property_name_sym}": property)
-        else
-            puts "Not enought money"
-        end
-    end
+    # def buy_property(property,map)
+    #     # "???????????"
+    #     else
+    #         puts "Not enough money"
+    #     end
+    # end
 
-    def put_in_jail?(player)
-        if player.location = 6
-            player.jail_status = true
-            player.jail_time = 2
-            @player_in_jail.merge!(player.name.to_sym(), player)
-        elsif player.location = 18
+    def put_in_jail?
+        if @location == 6
+            @jail_status = true
+            @jail_time = 2
+            # @player_in_jail.merge!@name.to_sym(), player)
+        elsif @location == 18
             puts "passing by the jail"
         end
     end
 end
-
-#  def to_s(player,location,map)
-#         "location:" + map[player.location].name
-#     end
-
-
-# class Player
-#     attr_reader :name
-#     attr_accessor :money, :property, :jail_status
-#     def initialize(name)
-#         @name = name
-#         @money = 4000
-#         @property = {}
-#         @jail_status = false
-#         @jail_time = 0
-#     end
-
-# def bribe
-#     if(@money > 300 && @jail_time >= 1)
-#         puts "Do you want to bribe your way out of jail? ($300)"
-#         puts "1.Yes"
-#         puts "2.No"
-#         player_input = gets.strip
-#         case player_input
-#         when "1"
-#             @money -= 300
-#             @jail_time = 0
-#             @jail_status = false
-#             puts "You are free!"
-#         when "2"
-#             puts "You lose a turn"
-#             @jail_time -= 1
-#         end
-#     end
-# end
 
 
 
@@ -92,18 +52,8 @@ end
 # end
 
 class Chance
-
-    def initialize ()
-        @random_chance = 0
-    end
-
-    def draw()
-        @random_chance = 2
-    end
-
-    def read(player)
-
-        case draw()
+    def chance(player)
+        case rand(1..4)
         when 1
             chance_1(player)
         when 2
@@ -130,8 +80,7 @@ class Chance
 
     def chance_2(player)
         puts " Move forward up to 5 spaces"
-        player.location = player.location + 5
-
+        player.location += 5
     end
 
     def chance_3(player)
@@ -140,8 +89,8 @@ class Chance
     end
 
     def chance_4(player)
-        puts "put into jail"
-        jail.status = false
+        puts  "Go Back 3 Spaces"
+        player.location -= 3
 
     end
 
@@ -151,19 +100,9 @@ class Chance
     end
 end
 
-
-class CommunityChest
-    def initialize
-        @random_community_chest
-    end
-
-    def draw()
-        @random_community_chest = rand(1..2)
-    end
-
-    def read(player)
-        @random_community_chest = draw()
-        case @random_community_chest
+class Community_Chest
+    def community_chest(player)
+        case rand(1..4)
         when 1
             community_chest_1(player)
         when 2
@@ -176,7 +115,6 @@ class CommunityChest
             community_chest_5(player)
         end
     end
-
 
     def community_chest_1(player)
         puts " Bank pays you dividend of $50"
@@ -199,11 +137,10 @@ class CommunityChest
     end
 
     def community_chest_5(player)
-        puts "You are assessed for street repairs – $40 per house, $115 per hotel"
+        puts "You are assessed for street repairs – $40 per house,                  $115 per hotel"
          #???????????????????????????
     end
 end
-
 
 class Property
     attr_reader :name, :id
@@ -228,6 +165,10 @@ class Property
             puts "Not enough money"
         end
     end
+
+    def to_s(location,map,property)
+        "location" + @name
+    end
 end
 
 class Start
@@ -243,17 +184,21 @@ class Jail
         @player_in_jail = {}
     end
 end
-in_jail = Jail.new
-pass_jail = Jail.new
+
 class FreeParking
-    def free_parking(player, player_position)
-        #move player to the desired position
+    def free_parking(player)
+        puts"""Now you can move to anywhere you want,
+                Where would you want to go"""
+        input = gets().strips.downcase
+        player.location = map.index(input)
+        puts " You are at #{input} now ! "
     end
 end
 
-
-
-
+in_jail = Jail.new
+pass_jail = Jail.new
+start = Start.new()
+free_parking = FreeParking.new()
 darwin = Property.new("Darwin", 100, "DRW")
 alice_spring = Property.new("Alice Spring", 120, "ASP")
 stanley = Property.new("Stanley", 140, "DRW")
@@ -270,15 +215,8 @@ kangaroo_island = Property.new("Kangaroo Island", 420, "KGR")
 gold_coast = Property.new("Gold Coast", 440, "GCS")
 white_sundays = Property.new("White Sundays", 460, "WHS")
 sydney = Property.new("Sydney", 500, "SYD")
-
 chance = Chance.new()
-community_chest = CommunityChest.new()
-
-#create corner classes
-start = Start.new()
-jail = Jail.new()
-free_parking = FreeParking.new()
-
+community_chest = Community_Chest.new()
 
 map = [
     start,
@@ -306,23 +244,36 @@ map = [
     white_sundays,
     sydney
 ]
+
 player1 = Player.new("suki")
 player2 = Player.new("brandon")
 player3 = Player.new("richard")
 player4 = Player.new("michael")
+
+player_list = [player1,player2,player3,player4]
+
+player_list.each do |player|
+    if player.money<=0
+        player_list.delete(player)
+        puts "#{player},you have bankrupt"
+        player.property.each do |property|
+        property.owner = "nil"
+    end
+        player.property.clear
+    end
+end
+
+
 puts player1.location
-puts map[player1.location]
-puts player1.money
 player1.toss_dice
+
 puts player1.location
 puts map[player1.location]
 puts player1.money
 
-
-#  puts chance.draw
-#  chance.read(player1)
-#  puts player1.location
-#  puts map[player1.location]
+ chance.read(player1)
+ puts player1.location
+ puts map[player1.location]
 
 
 # player1.toss_dice
@@ -406,4 +357,25 @@ puts player1.money
 # You inherit $100
 # From sale of stock you get $50
 # Holiday Fund matures - Receive $100
+
+
+# def bribe
+#     if(@money > 300 && @jail_time >= 1)
+#         puts "Do you want to bribe your way out of jail? ($300)"
+#         puts "1.Yes"
+#         puts "2.No"
+#         player_input = gets.strip
+#         case player_input
+#         when "1"
+#             @money -= 300
+#             @jail_time = 0
+#             @jail_status = false
+#             puts "You are free!"
+#         when "2"
+#             puts "You lose a turn"
+#             @jail_time -= 1
+#         end
+#     end
+# end
+
 
