@@ -1,11 +1,163 @@
-# Brandon and Suki Projct
+# Brandon and Suki Project
 
 **Project name** : Monopoly_in_ruby
 
 **Project purpose** : This game is made to implement the practice in building a ruby terminal app and get a better understanding                                       of class, method, loops, and application of ruby gem packages.  we create the Monopoly in ruby to use innovation skill to explore ruby and stimulate the game system.
 
-**project link** : This is our projcet link [Click me please](.)
+**Project link** : This is our projcet link [Click me please](.)
 
+
+
+**Gmae board, Tile and Players Movement**
+
+Tile is a basic and significant set up in our game, the game board is a circle made of tiles. Tile is like ground block for player's token to land on. There are 6 types of tile : Property, Start,Jail,Freeparking, chance and community chest. Each of them has different few functionalities in the game. when the player land on the particular tile. Something would happen to the player. 
+
+
+Game board property tiles
+```
+board = [
+    start,
+    darwin,
+    alice_spring,
+    chance,
+    stanley,
+    freycinet_national_park,
+    jail,
+    hobart,
+    margaret_river, 
+    community_chest, 
+    broome,
+    esperance,
+    free_parking,
+    pilip_island,
+    melbourne,
+    chance_2, 
+    canberra,
+    questacon,
+    pass_jail,
+    kangaroo_island,
+    gold_coast,
+    community_chest_2,
+    white_sundays,
+    sydney]
+#create chance and community class object 
+chance = Chance.new() 
+community_chest = CommunityChest.new() 
+start = Start.new() 
+jail = Jail.new() 
+pass_jail = Jail.new() 
+free_parking = FreeParking.new() 
+```
+Tiles build 
+
+```
+def display_tile(tile)
+    #determine the type of the object 
+    if(tile.is_a?(Property))
+        if(tile.owner == nil)
+            temp_id = "No owner"
+        else 
+            temp_id = tile.owner.id 
+        end 
+        box = TTY::Box.frame(
+            width: 18,
+            height: 6,
+            align: :center) do
+                """#{tile.id}
+tier:#{tile.tier}
+owner: #{temp_id}
+#{tile.in?()}
+                """
+            end 
+            ```
+every time a player land on the tiles, the tile would contain player on the display. eg. line 1
+```
+board.each do |tile| 
+        map_array.push(display_tile(tile))
+    end 
+
+    #line one 
+    line_one_map = concatenate_map(map_array[0] , map_array[1])
+    counter = 2 
+    while(counter <= 6 )
+        line_one_map = concatenate_map(line_one_map, map_array[counter])
+        counter += 1 
+    end 
+    ```
+**Game Setting**
+
+this terminal app simulate a monoploy game of 4 player , at the start of the game, each player is given a certain amount of money of $2000 and a token, token represent the player body on the gameboard. then player must roll the dice and move their token. after that they forward the number of spaces as  rolled on the dice. after player have completed their play, the tokens remain on the spaces occupied and proceed from that point on the player's next turn.
+    According to the space your token reahes, you may be entitled to buy real estate which is called property in our Monopoly_in_ruby, or be obliged to pay rent, draw a Chance or Community Chest card. " Go to Jain", etc
+    
+name of each player and each player is given amount of money
+```
+player1 = Player.new("suki")
+player2 = Player.new("brandon")
+player3 = Player.new("richard")
+player4 = Player.new("michael") 
+player_list = [player1, player2, player3, player4]
+
+class Player
+    attr_reader :name, :id
+    attr_accessor :money, :property, :jail_status, :location, :bankrupt, :jail_time
+
+    @@player_counter = 0
+    def initialize(name)
+        @@player_counter += 1
+        @name = name
+        @money = 2000
+        @property = {}
+        @jail_status = false
+        @jail_time = 0
+        @location = 0
+        @id = "P#{@@player_counter.to_s()}"
+        @bankrupt = false
+    end
+    ```
+Player movement setting
+```
+
+def game(player_list, board) 
+    current_player = player_list
+    #set initial location 
+    current_player.each do |player|
+        board[0].move_in(player) 
+    end 
+    display_map(board)
+    while(current_player.length > 1) 
+        current_player.each do |player|
+            player.player_stat() 
+            if(player.jail_status == false)
+                origin = player.location
+                player.toss_dice() 
+                destination = player.location 
+                board[destination].move_in(player)
+                player.location = destination 
+                board[destination].tile_reader(player)
+                board[origin].move_out(player)
+                display_map(board)
+            else
+                player.bribe?() 
+            end 
+        end 
+    end 
+    puts "#{current_player[0]} is the winner ! "
+end 
+
+def concatenate_map(current_display, next_tile)
+    current_display_lines = current_display.lines 
+    next_tile_lines = next_tile.lines
+    return current_display_lines.each_with_object('') { |line, str| str << line.chomp << next_tile_lines.shift }
+end 
+
+game(player_list, board) 
+```
+#### Features in Monopoly_in_ruby
+
+**Perchase Property:**
+
+   If the player lands on an unowned property, the player may buy it for the price listed on that property's space. If they agree to buy it, they pay the Bank the amount shown on the property space and receives the deed for that property. If they refuse to buy the property for the amount stated on the deed, the property is auctioned. Bidding may start at any price, and all players may bid. The highest bidder wins the property and pays the Bank the amount bid and receives the property's title deed. Railroads and utilities are also considered properties.
+   Property names ,Abbrevation and Cost
 ```
 darwin = Property.new("Darwin", 100, "DRW")
 alice_spring = Property.new("Alice Spring", 120, "ASP")
@@ -23,68 +175,325 @@ kangaroo_island = Property.new("Kangaroo Island", 420, "KGR")
 gold_coast = Property.new("Gold Coast", 440, "GCS")
 white_sundays = Property.new("White Sundays", 460, "WHS")
 sydney = Property.new("Sydney", 500, "SYD")
-
-#create chance and community class object 
-chance = Chance.new() 
-community_chest = CommunityChest.new() 
-
-start = Start.new() 
-jail = Jail.new() 
-pass_jail = Jail.new() 
-free_parking = FreeParking.new() 
 ```
+buy property
 
-**Gmae board, Tile and Players Movement**
-
-Tile is a basic and significant set up in our game, the game board is a circle made of tiles. There are 6 types of tile : Property, Start,Jail,Freeparking, chance and community chest. Each of them has different few functionalities in the game. when the player land on the particular tile. Something would happen to the player. 
-
-
-
-![gameboard map](./docs/Chance_Community_Map.png "game board map")
-![game board til](./docs/gameboard_tiles.png "game board tile")
-
-every time a player land on the tiles, the tile would contain player on the display. 
-![tiles types](./docs/Player_tile_Movement "6 types of tiles) 
-
-**Game Setting**
-
-this terminal app simulate a monoploy game of 4 player , at the start of the game, each player is given a certain amount of money of $2000 and a token, token represent the player body on the gameboard. then player must roll the dice and move their token. after that they forward the number of spaces as  rolled on the dice. after player have completed their play, the tokens remain on the spaces occupied and proceed from that point on the player's next turn.
-    According to the space your token reahes, you may be entitled to buy real estate which is called property in our Monopoly_in_ruby, or be obliged to pay rent, draw a Chance or Community Chest card. " Go to Jain", etc """
-
-#### Features in Monopoly_in_ruby
-
-**Perchase Property:**
-
-   If the player lands on an unowned property, the player may buy it for the price listed on that property's space. If they agree to buy it, they pay the Bank the amount shown on the property space and receives the deed for that property. If they refuse to buy the property for the amount stated on the deed, the property is auctioned. Bidding may start at any price, and all players may bid. The highest bidder wins the property and pays the Bank the amount bid and receives the property's title deed. Railroads and utilities are also considered properties.
-
-![Porperty and Upgrade Feature](./docs/Property_class_upgrade_feature.png)
-
+```
+ef property_menu(property, player)
+    prompt = TTY::Prompt.new
+    puts "You arrived at #{property.name}" 
+    if(property.owner == player)  
+        puts "Current property tier: #{property.tier}"
+        response = prompt.select("Do you want to upgrade your property?", %w(Yes No))
+        if(response == "Yes") 
+            property.upgrade(player)
+        else 
+            puts "Enjoy your stay" 
+        end 
+    elsif(property.owner == nil)
+        puts "Nobody own a property in #{property.name} do you want to buy it?"
+        response = prompt.select("Do you want to purchase a property in #{property.name}? for #{property.buy_cost}?", %w(Yes No))
+        if(response == "Yes") 
+            player.buy_property(property)
+        else 
+            puts "See you next time" 
+        end 
+    else 
+        player.rent(property)
+    end 
+end 
+```
 **Property Rent**
 
    If the player lands on an unmortgaged property owned by another player, they pay rent to that person, as specified on the property's deed. It is the property owner's responsibility to demand rent, and they have until the beginning of the second following player's turn to do so.
    If the player lands on their own property, or on property which is owned by another player but currently mortgaged, nothing happens.
 
-![Porperty Rent Feature](./docs/property_rent.png)
-
+```
+def rent(property)
+        prompt = TTY::Prompt.new()
+        if(@money >= property.rent)
+            prompt.select("Property owned by #{property.owner.name},
+            the rent cost #{property.rent}", %w(Pay))
+            @money -= property.rent
+            property.owner.money += property.rent
+        else
+            prompt.select("You do not have enough money.", %w(Bankrupt))
+            @bankrupt = true
+        end
+    end
+```
 **Chance and Community Chest Feature**
 
    If the player lands on a Chance or Community Chest, the player takes a card from the top of the respective pack and performs the instruction given on the card.
 
-![Chance Feature](./docs/Chance_example.png)
-![Community Chest Feature](./docs/Communitychestclass_example.png)
+class Chance < Tile
+    attr_accessor :random_chance, :board
+    def initialize
+        super()
+        @random_chance = 0
+        @board = []
+    end
+
+    def draw()
+        @random_chance = rand(1..5)
+    end
+
+    def read(player)
+        case draw()
+        when 1
+            chance_1(player)
+        when 2
+            chance_2(player)
+        when 3
+            chance_3(player)
+        when 4
+            chance_4(player)
+        when 5
+            chance_5(player)
+        end
+    end
+
+    def chance_1(player)
+        prompt = TTY::Prompt.new()
+        prompt.select("BUSTED! You are in jail now !", %w(Jailed))
+        board[player.location].move_out(player)
+        player.location = 6
+        board[player.location].move_in(player)
+        board[player.location].tile_reader(player)
+    end
+
+    def chance_2(player)
+        prompt = TTY::Prompt.new()
+        prompt.select("Move forward up to 5 spaces", %w(Whoosh!))
+        board[player.location].move_out(player)
+        player.location += 5
+        board[player.location].move_in(player)
+        board[player.location].tile_reader(player)
+    end
+
+    def chance_3(player)
+        prompt = TTY::Prompt.new()
+        prompt.select("Make general repairs on all your property–For each house pay $25", %w(Pay))
+        maintenance_cost = player.property.length * 50
+        if (player.money >= maintenance_cost)
+            player.money -= maintenance_cost
+        else
+            puts "You don't have enough money"
+            player.bankrupt = true
+        end
+    end
+
+    def chance_4(player)
+        prompt = TTY::Prompt.new()
+        prompt.select("Vacation to Sydney", %w(Whoosh!))
+        board[player.location].move_out(player)
+        player.location = 23
+        board[player.location].move_in(player)
+        board[player.location].tile_reader(player)
+    end
+
+    def chance_5(player)
+        prompt = TTY::Prompt.new()
+        prompt.select("To free parking", %w(Whoosh!))
+        board[player.location].move_out(player)
+        player.location = 12
+        board[player.location].move_in(player)
+        board[player.location].tile_reader(player)
+    end
+end
+```
+
+```
+class CommunityChest < Tile
+
+    def initialize
+        super()
+        @random_community_chest = 0
+    end
+
+    def draw()
+        @random_community_chest = rand(1..5)
+    end
+
+    def read(player)
+        @random_community_chest = draw()
+        case @random_community_chest
+        when 1
+            community_chest_1(player)
+        when 2
+            community_chest_2(player)
+        when 3
+            community_chest_3(player)
+        when 4
+            community_chest_4(player)
+        when 5
+            community_chest_5(player)
+        end
+    end
+
+    def community_chest_1(player)
+        prompt = TTY::Prompt.new()
+        prompt.select("Bank pays you dividend of $50", %w(Collect))
+        player.money += 50
+    end
+
+    def community_chest_2(player)
+        prompt = TTY::Prompt.new()
+        if(player.money >= 200)
+            prompt.select("Doctor's fees – Pay $200", %w(Pay))
+            player.money -= 200
+        else
+            puts "Not enough money"
+            player.bankrupt = true
+        end
+    end
+
+    def community_chest_3(player)
+        prompt = TTY::Prompt.new()
+        prompt.select("It is your birthday Collect $200", %w(Collect))
+        player.money += 50
+    end
+
+    def community_chest_4(player)
+        prompt = TTY::Prompt.new()
+        if(player.money >= 120)
+            prompt.select("Pay School Fees of $120", %w(Pay))
+            player.money -= 120
+        else
+            puts "Not enough money"
+            player.bankrupt = true
+        end
+    end
+
+    def community_chest_5(player)
+        prompt = TTY::Prompt.new()
+        number_of_property = player.property.length
+        total_cost = 80 * number_of_property
+        if(player.money >= total_cost)
+            prompt.select("You are assessed for street repairs – $80 per property", %w(Pay))
+            player.money -= number_of_property * 60
+        else
+            puts "Not enough money"
+            player.bankrupt = true
+        end
+    end
+end
+```
 
 **Jail System**
 
-+ If the player lands on the Jail space, they are "Just Visiting". No penalty applies.
+If the player lands on the Jail space, they are "Just Visiting". No penalty applies.
 If the player lands on the Go to Jail square, they must move their token directly to Jail.
+```
+class Jail < Tile
+    attr_accessor :player_in_jail, :board
+    def initialize()
+        super()
+        @player_in_jail = {}
+        @board = []
+    end
 
-![Jail System](./docs/Jail_System.png)
+    def check_index(player)
+        puts "Player location : #{player.location}"
+        case player.location
+        when 6
+            board[player.location].move_out(player)
+            player.go_to_jail()
+            puts "Player location2 : #{player.location}"
+            board[player.location].move_in(player)
+            update_jail(player)
+            player.player_stat()
+        when 18
+            pass_by_jail()
+        end
+        return player
+    end
+
+    def update_jail(player)
+        player_name_sym = player.name.to_sym()
+        player_hash = {
+            "#{player_name_sym}": player
+        }
+        @player_in_jail.merge!(player_hash)
+    end
+
+    def pass_by_jail()
+        puts "Passing by Jail"
+    end
+end
+```
+
+**Brible Feature
+
+if the player is in jails, he could be bailed out if he is willing to pay a certain amount of money.
+
+```def bribe?
+        prompt = TTY::Prompt.new()
+        if(@money > 300 && @jail_time >= 1)
+            player_input = prompt.select("Do you want to bribe your way out of jail? ($300)", %w(Yes No))
+            case player_input
+            when "Yes"
+                @money -= 300
+                @jail_time = 0
+                @jail_status = false
+                @location = 18
+                puts "You are free!"
+            when "No"
+                puts "You lose a turn"
+                @jail_time -= 1
+            end
+        end
+    end
+    ```
 
 **Free Parking**
 
 A player landing on this space can go anywhere he want to on the game board, there is no limit, for example he can fly to his property and upgrade his property, or go to a chance to test his luck. 
 
-![Free Parking ](./docs/Freeparking_system.png)
+```
+class FreeParking < Tile
+    attr_accessor :board
+    def initialize()
+        super()
+        @board = []
+    end
+
+
+    def free_parking(player)
+        prompt = TTY::Prompt.new()
+        user_choice = prompt.select("Where do you want to park?") do |menu|
+            menu.choice name: "Start", value: 0
+            menu.choice name: "Darwin", value: 1
+            menu.choice name: "Alice Spring", value: 2
+            menu.choice name: "Chance", value: 3
+            menu.choice name: "Stanley", value: 4
+            menu.choice name: "Freycinet National Park", value: 5
+            menu.choice name: "Jail", value: 6
+            menu.choice name: "Hobart", value: 7
+            menu.choice name: "Margaret River", value: 8
+            menu.choice name: "Community Chest", value: 9
+            menu.choice name: "Broome", value: 10
+            menu.choice name: "Esperance", value: 11
+            menu.choice name: "Free Parking", value: 12, disabled:("You are here")
+            menu.choice name: "Pilip Island", value: 13
+            menu.choice name: "Melbourne", value: 14
+            menu.choice name: "Chance_2", value: 15
+            menu.choice name: "Canberra", value: 16
+            menu.choice name: "Questacon", value: 17
+            menu.choice name: "Pass by Jail", value: 18
+            menu.choice name: "Kangaroo Island", value: 19
+            menu.choice name: "Gold Coast", value: 20
+            menu.choice name: "Community Chest_2", value: 21
+            menu.choice name: "White Sundays", value: 22
+            menu.choice name: "Sydney", value: 23
+        end
+        board[player.location].move_out(player)
+        player.location = user_choice
+        board[player.location].move_in(player)
+        board[player.location].tile_reader(player)
+    end
+end
+```
 
 **Few systems that we need to do in future **
 
