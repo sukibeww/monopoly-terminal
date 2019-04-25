@@ -1,5 +1,6 @@
 require_relative './monopoly_class.rb' 
 require 'tty-box' 
+require 'tty-prompt'
 
 #create player 
 player1 = Player.new("suki")
@@ -11,7 +12,7 @@ player_list = [player1, player2, player3, player4]
 #create property 
 darwin = Property.new("Darwin", 100, "DRW")
 alice_spring = Property.new("Alice Spring", 120, "ASP")
-stanley = Property.new("Stanley", 140, "DRW")
+stanley = Property.new("Stanley", 140, "STY")
 freycinet_national_park = Property.new("Freycinet National Park", 160, "FNP")
 hobart = Property.new("Hobart", 200, "HBT")
 margaret_river = Property.new("Margaret River", 220, "MGR")
@@ -28,16 +29,16 @@ sydney = Property.new("Sydney", 500, "SYD")
 
 #create chance and community class object 
 chance = Chance.new() 
+chance_2 = Chance.new()
 community_chest = CommunityChest.new() 
+community_chest_2 = CommunityChest.new() 
 
-#create corner classes
 start = Start.new() 
 jail = Jail.new() 
 pass_jail = Jail.new() 
 free_parking = FreeParking.new() 
 
-#map 
-map = [
+board = [
     start,
     darwin,
     alice_spring,
@@ -53,18 +54,25 @@ map = [
     free_parking,
     pilip_island,
     melbourne,
-    chance, 
+    chance_2, 
     canberra,
     questacon,
     pass_jail,
     kangaroo_island,
     gold_coast,
-    community_chest,
+    community_chest_2,
     white_sundays,
     sydney
 ]
 
-def display_map(map) 
+chance.board = board
+chance_2.board = board
+free_parking.board = board
+jail.board = board 
+
+
+
+def display_map(board) 
     map_array = [] 
     map_output = ""
     empty_box = TTY::Box.frame(
@@ -78,7 +86,7 @@ def display_map(map)
             right: false,
             left: false
         })
-    map.each do |tile| 
+ board.each do |tile| 
         map_array.push(display_tile(tile))
     end 
 
@@ -142,7 +150,7 @@ def display_map(map)
     line_six_map = concatenate_map(map_array[19], empty_box.to_s)
     while(counter <= 6) 
         if(counter == 6 )
-            line_six_map = concatenate_map(line_six_map, map_array[9])
+            line_six_map = concatenate_map(line_six_map, map_array[11])
         else
             line_six_map =concatenate_map(line_six_map, empty_box) 
         end 
@@ -168,13 +176,18 @@ end
 def display_tile(tile)
     #determine the type of the object 
     if(tile.is_a?(Property))
+        if(tile.owner == nil)
+            temp_id = "No owner"
+        else 
+            temp_id = tile.owner.id 
+        end 
         box = TTY::Box.frame(
             width: 18,
             height: 6,
             align: :center) do
                 """#{tile.id}
 tier:#{tile.tier}
-owner: P1
+owner: #{temp_id}
 #{tile.in?()}
                 """
             end 
@@ -229,37 +242,55 @@ Parking
     return box.to_s 
 end 
 
-def tile_reader(tile) 
-    if(tile.is_a? Property)
-
-    elsif (tile.is_a? Start)
-
-    elsif (tile.is_a? Chance)
-
-    elsif (tile.is_a? CommunityChest)
-
-    elsif (tile.is_a? Jail)
-
-    elsif (tile.is_a? FreeParking) 
-
+def property_menu(property, player)
+    prompt = TTY::Prompt.new
+    puts "You arrived at #{property.name}" 
+    if(property.owner == player)  
+        puts "Current property tier: #{property.tier}"
+        response = prompt.select("Do you want to upgrade your property?", %w(Yes No))
+        if(response == "Yes") 
+            property.upgrade(player)
+        else 
+            puts "Enjoy your stay" 
+        end 
+    elsif(property.owner == nil)
+        puts "Nobody own a property in #{property.name} do you want to buy it?"
+        response = prompt.select("Do you want to purchase a property in #{property.name}? for #{property.buy_cost}?", %w(Yes No))
+        if(response == "Yes") 
+            player.buy_property(property)
+        else 
+            puts "See you next time" 
+        end 
+    else 
+        player.rent(property)
     end 
 end 
 
-require 'pry'
-def game(player_list, map) 
-    map[0].player_in = player_list
-    puts map[6].class
-    counter = 0
-    while(counter <= 3)
-        puts "#{player_list[0].name} turn"
-        origin = player_list[0].location
-        player_list[0].toss_dice() 
-        destination = player_list[0].location 
-        map[destination].move_in(player_list[0])
-        after_move = map[origin].move_out(player_list[0])
-        counter += 1 
+def game(player_list, board) 
+    current_player = player_list
+    #set initial location 
+    current_player.each do |player|
+        board[0].move_in(player) 
     end 
-    display_map(map)
+    display_map(board)
+    while(current_player.length > 1) 
+        current_player.each do |player|
+            player.player_stat() 
+            if(player.jail_status == false)
+                origin = player.location
+                player.toss_dice() 
+                destination = player.location 
+                board[destination].move_in(player)
+                player.location = destination 
+                board[destination].tile_reader(player)
+                board[origin].move_out(player)
+                display_map(board)
+            else
+                player.bribe?() 
+            end 
+        end 
+    end 
+    puts "#{current_player[0]} is the winner ! "
 end 
 
 def concatenate_map(current_display, next_tile)
@@ -268,4 +299,4 @@ def concatenate_map(current_display, next_tile)
     return current_display_lines.each_with_object('') { |line, str| str << line.chomp << next_tile_lines.shift }
 end 
 
-game(player_list, map) 
+game(player_list, board) 
