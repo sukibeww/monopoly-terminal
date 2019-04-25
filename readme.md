@@ -48,7 +48,7 @@ jail = Jail.new()
 pass_jail = Jail.new() 
 free_parking = FreeParking.new() 
 ```
-Tiles build 
+Tiles Build 
 
 ```
 def display_tile(tile)
@@ -69,7 +69,7 @@ owner: #{temp_id}
 #{tile.in?()}
                 """
             end 
-            ```
+```
 every time a player land on the tiles, the tile would contain player on the display. eg. line 1
 ```
 board.each do |tile| 
@@ -83,7 +83,7 @@ board.each do |tile|
         line_one_map = concatenate_map(line_one_map, map_array[counter])
         counter += 1 
     end 
-    ```
+```
 **Game Setting**
 
 this terminal app simulate a monoploy game of 4 player , at the start of the game, each player is given a certain amount of money of $2000 and a token, token represent the player body on the gameboard. then player must roll the dice and move their token. after that they forward the number of spaces as  rolled on the dice. after player have completed their play, the tokens remain on the spaces occupied and proceed from that point on the player's next turn.
@@ -113,7 +113,8 @@ class Player
         @id = "P#{@@player_counter.to_s()}"
         @bankrupt = false
     end
-    ```
+```
+    
 Player movement setting
 ```
 
@@ -225,7 +226,7 @@ def rent(property)
 **Chance and Community Chest Feature**
 
    If the player lands on a Chance or Community Chest, the player takes a card from the top of the respective pack and performs the instruction given on the card.
-
+```
 class Chance < Tile
     attr_accessor :random_chance, :board
     def initialize
