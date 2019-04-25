@@ -424,11 +424,12 @@ class Jail < Tile
 end
 ```
 
-**Brible Feature
+**Brible Feature**
 
-if the player is in jails, he could be bailed out if he is willing to pay a certain amount of money.
+If the player is in jails, he could be bailed out if he is willing to pay a certain amount of money.
 
-```def bribe?
+```
+def bribe?
         prompt = TTY::Prompt.new()
         if(@money > 300 && @jail_time >= 1)
             player_input = prompt.select("Do you want to bribe your way out of jail? ($300)", %w(Yes No))
