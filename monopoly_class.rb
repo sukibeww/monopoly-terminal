@@ -18,8 +18,10 @@ class Player
     def player_stat()
         puts "Player name : #{@name}"
         puts "Player money : #{@money}"
-        puts "Jail status : #{@jail_status}"
-        puts "Jail time = #{@jail_time}"
+        if (@jail_status == true)
+            puts "Jail status : #{@jail_status}"
+            puts "Jail time = #{@jail_time}"
+        end 
     end 
 
     def lap() 
