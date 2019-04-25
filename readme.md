@@ -6,7 +6,7 @@
 
 **project link** : This is our projcet link [Click me please](.)
 
-"""
+```
 darwin = Property.new("Darwin", 100, "DRW")
 alice_spring = Property.new("Alice Spring", 120, "ASP")
 stanley = Property.new("Stanley", 140, "STY")
@@ -22,7 +22,7 @@ questacon = Property.new("Questacon", 360, "QTC")
 kangaroo_island = Property.new("Kangaroo Island", 420, "KGR")
 gold_coast = Property.new("Gold Coast", 440, "GCS")
 white_sundays = Property.new("White Sundays", 460, "WHS")
-sydney = Property.new("Sydney", 500, "SYD")"""
+sydney = Property.new("Sydney", 500, "SYD")
 
 #create chance and community class object 
 chance = Chance.new() 
@@ -32,7 +32,7 @@ start = Start.new()
 jail = Jail.new() 
 pass_jail = Jail.new() 
 free_parking = FreeParking.new() 
-
+```
 
 **Gmae board, Tile and Players Movement**
 
