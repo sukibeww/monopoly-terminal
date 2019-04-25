@@ -6,7 +6,7 @@ class Player
     def initialize(name)
         @@player_counter += 1
         @name = name
-        @money = 4000
+        @money = 2000
         @property = {}
         @jail_status = false
         @jail_time = 0
@@ -23,7 +23,9 @@ class Player
     end
 
     def lap()
-        @money += 1000
+        puts "LAP! you earn $500"
+        @money += 500
+        player_stat()
     end
 
     def bribe?
@@ -58,10 +60,10 @@ class Player
     def toss_dice()
         prompt = TTY::Prompt.new()
         prompt.select("#{@name}'s turn'", %w(Roll!))
-        random_dice = rand(1..6)
+        random_dice = 3 #rand(1..6)
         puts "You rolled #{random_dice}"
         @location += random_dice
-        if(@location > 23)
+        if(@location >= 23)
             @location -= 23
             lap()
         end
@@ -140,6 +142,27 @@ class Tile
         end
     end
 
+    def tile_reader(player)
+        prompt = TTY::Prompt.new()
+        if self.is_a? Property
+            property_menu(self, player)
+        elsif self.is_a? Start
+            prompt.select("You arrrived at the Start", %w(Continue))
+        elsif self.is_a? Chance
+            prompt.select("You arrrived at the Chance", %w(Continue))
+            self.read(player)
+        elsif self.is_a? CommunityChest
+            prompt.select("You arrrived at the Community Chest", %w(Continue))
+            self.read(player)
+        elsif self.is_a? Jail
+            prompt.select("You arrrived at the Jail", %w(Continue))
+            self.check_index(player)
+        elsif self.is_a? FreeParking
+            prompt.select("You arrrived at the Free Parking", %w(Continue))
+            self.free_parking(player)
+        end
+    end
+
 end
 
 class Property < Tile
@@ -166,7 +189,7 @@ class Property < Tile
             @buy_cost += @buy_cost
             @tier += 1
         else
-            puts "Not enough money"
+            puts "Not enought money"
         end
     end
 
@@ -394,15 +417,15 @@ class FreeParking < Tile
             menu.choice name: "Free Parking", value: 12, disabled:("You are here")
             menu.choice name: "Pilip Island", value: 13
             menu.choice name: "Melbourne", value: 14
-            menu.choice name: "Chance", value: 15
+            menu.choice name: "Chance_2", value: 15
             menu.choice name: "Canberra", value: 16
             menu.choice name: "Questacon", value: 17
             menu.choice name: "Pass by Jail", value: 18
             menu.choice name: "Kangaroo Island", value: 19
             menu.choice name: "Gold Coast", value: 20
-            menu.choice name: "Community Chest", value: 21
-            menu.choice name: "White Sundays", value: 21
-            menu.choice name: "Sydney", value: 22
+            menu.choice name: "Community Chest_2", value: 21
+            menu.choice name: "White Sundays", value: 22
+            menu.choice name: "Sydney", value: 23
         end
         board[player.location].move_out(player)
         player.location = user_choice
