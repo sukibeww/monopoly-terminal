@@ -6,7 +6,7 @@
 
 **Project link** : This is our project link [Click me please](.)
 
-#### Project flow and Timeline 
+#### Project flow :
 
 ![task_flow](./docs/Project_work_flow.png)  
 
@@ -18,9 +18,9 @@
 | Suki | Brain Storm | Projct Planing | Jail Feature | GameBoard Displaye | Tile System | Tile System | Players Movement | Debug | Final Review |
 
 
-### Game board, Tile and Players Movement
+### Game board, Tiles and Players Movement
 
-Tile is a basic and significant element in our game, the game board is a circle made of tiles. Tile is like ground block for player's token to land on. There are 6 types of tile : Property, Start, Jail, Freeparking, chance and community chest. Each of them has different few functionalities in the game. when the player land on the particular tile. Something would happen to the player. 
+Tile is a basic and significant element in our game, the game board is a circle made of tiles. Tile is like a block for player's token to land on. There are 6 types of tile : Property, Start, Jail, Freeparking, chance and community chest. Each of them has few different  functionalities in the game. when the player land on the particular tile. Something would happen to the player. 
 
 
 ##### Game board property tiles
@@ -51,7 +51,9 @@ board = [
     community_chest_2,
     white_sundays,
     sydney]
-#create chance and community class object 
+    
+# create chance and community class object 
+
 chance = Chance.new() 
 community_chest = CommunityChest.new() 
 start = Start.new() 
@@ -85,7 +87,8 @@ owner: #{temp_id}
                 """
             end 
 ```
-every time a player land on the tiles, the tile would contain player on the display. eg. line 1
+When a player land on the tiles, the tile would contain player on the display. eg. line 1
+
 ```
 board.each do |tile| 
         map_array.push(display_tile(tile))
@@ -101,10 +104,10 @@ board.each do |tile|
 ```
 ### Game Setting
 
-this terminal app simulate a monopoly game of 4 player , at the start of the game, each player is given a certain amount of money of $2000 and a token, token represent the player body on the gameboard. then player must roll the dice and move their token. after that they forward the number of spaces as  rolled on the dice. after player have completed their play, the tokens remain on the spaces occupied and proceed from that point on the player's next turn.
+Monopoly_in_ruby simulate a monopoly game of 4 player , at the start of the game, each player is given a certain amount of money of $2000 and a token, token represent the player body on the gameboard. then player must roll the dice and move their token. after that they forward the number of spaces as  rolled on the dice. after player have completed their play, the tokens remain on the spaces occupied and proceed from that point on the player's next turn.
     According to the space your token reaches, you may be entitled to buy real estate which is called property in our Monopoly_in_ruby, or be obliged to pay rent, draw a Chance or Community Chest card. " Go to Jain", etc.
     
-##### Name of each player and each player is given amount of money
+##### Name of each player is created and each player is given a certain amount of money
 ```
 player1 = Player.new("suki")
 player2 = Player.new("brandon")
@@ -219,7 +222,7 @@ ef property_menu(property, player)
     end 
 end 
 ```
-#### Property Rent
+##### Property Rent
 
    If the player lands on an unmortgaged property owned by another player, they pay rent to that person, as specified on the property's deed. It is the property owner's responsibility to demand rent, and they have until the beginning of the second following player's turn to do so.
    If the player lands on their own property, or on property which is owned by another player but currently mortgaged, nothing happens.
@@ -398,7 +401,7 @@ class CommunityChest < Tile
 end
 ```
 
-**Jail System**
+#### Jail 
 
 If the player lands on the Jail space, they are "Just Visiting". No penalty applies.
 If the player lands on the Go to Jail square, they must move their token directly to Jail.
@@ -441,7 +444,7 @@ class Jail < Tile
 end
 ```
 
-**Brible Feature**
+#### Brible
 
 If the player is in jails, he could be bailed out if he is willing to pay a certain amount of money.
 
@@ -466,7 +469,7 @@ def bribe?
     end
 ```
 
-**Free Parking**
+#### Free Parking
 
 A player landing on this space can go anywhere he want to on the game board, there is no limit, for example he can fly to his property and upgrade his property, or go to a chance to test his luck. 
 
@@ -520,17 +523,17 @@ end
 We haven't work on the go system which  they collect $200 when they pass GO, and either does the income tax system that collect the percentage system they earn each 10 turns, house selling system, hotel system, and stock system. who throw dice first system, mortgages system
 
 #### Team Works
- we break down our project into tasks and we use trello to manage our tasks. we work togeter remotly and effiently thanks for the trello and github. We push and pull the files before we update it on our local and push it on the github after we make change on it.
+ We break down our project into tasks and we use trello to manage our tasks. we work togeter remotly and effiently thanks for the trello and github. We push and pull the files before we update it on our local and push it on the github after we make change on it.
  
 ![Trello](./docs/Trello_Practice.png)
 
 
 #### User stories
 ```
-   As a player,I want to roll the dice, so that I can move around the game board. As a player,I wantt o see the board,so that I can track the game flow. As aplayer,I wan tto buy a property off the board so thatI can invest my in-game money to win the game.As aplayer,I wantto upgrade my propertyso thatI can invest more in promising property.As aplayer,I wantto be able bribe my way out of the jailso thatI have more way to strategize to win the game.As aplayer,I wantto be able to choose which tiles to go when I land on Free Parkingso thatthere will be more control in the game and less randomization
-   ```
+   As a player,I want to roll the dice, so that I can move around the game board. As a player, I want to see the board to track the game flow. As a player,I want to buy a property off the board to invest my in-game money to win the game. As a player,I want to upgrade my property in order to invest more in promising property. As aplayer,I want to be able bribe my way out of the jail, in which way I could be freedom and have chance to win the game. As aplayer,I want to be able to choose which tiles to go when I land on Free Parking. So that there will be more control in the game and less randomization.
+```
    
-### Patent Related Topic
+### Potential legal, moral, ethical, cultural and safety issues
    ___
    
  * Description of the app
@@ -538,16 +541,17 @@ We haven't work on the go system which  they collect $200 when they pass GO, and
 - [x] Project Functionality
 - [x] Screenshots
 - [x] Future enhancements
-- [ ] Potential legal, moral, ethical, cultural and safety issues
-- [ ] Possible social, political, cultural, racial, gender andinternational issues
+- [x] Potential legal, moral, ethical, cultural and safety issues
+
  * Details of design & planning process
-- [ ] Evidence of app idea brainstorming session
+- [x] Evidence of app idea brainstorming session
 - [x] User stories
-- [ ] Project plan & timeline
-- [ ] Description of overall app design (classes, files, basic flow)
-- [ ] Design considerations and choices
+- [x] Project plan & timeline
+- [x] Description of overall app design (classes, files, basic flow)
 - [x] Screenshots of Trello board(s)
-![Pikachu](https://seeklogo.com/images/P/pikachu-logo-42CAFBCD00-seeklogo.com.png) 
+
 Thanks for Watching !
+![Pikachu](https://seeklogo.com/images/P/pikachu-logo-42CAFBCD00-seeklogo.com.png) 
+
 
 
