@@ -9,12 +9,12 @@
 ___
 
 
-#### Game board, Tile and Players Movement
+### Game board, Tile and Players Movement
 
 Tile is a basic and significant element in our game, the game board is a circle made of tiles. Tile is like ground block for player's token to land on. There are 6 types of tile : Property, Start, Jail, Freeparking, chance and community chest. Each of them has different few functionalities in the game. when the player land on the particular tile. Something would happen to the player. 
 
 
-##### Game board property tiles
+#### Game board property tiles
 > blockquote
 	`code`
 ```
