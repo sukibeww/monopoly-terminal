@@ -545,10 +545,7 @@ We haven't work on the go system which  they collect $200 when they pass GO, and
 - [ ] Description of overall app design (classes, files, basic flow)
 - [ ] Design considerations and choices
 - [x] Screenshots of Trello board(s)
-
 ![Pikachu](https://seeklogo.com/images/P/pikachu-logo-42CAFBCD00-seeklogo.com.png) 
-Content [^1]
-
-[^1]: Hi! This is a footnote
+Thanks for Watching !
 
 
