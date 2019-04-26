@@ -528,7 +528,7 @@ We haven't work on the go system which  they collect $200 when they pass GO, and
 ![Trello](./docs/Trello_Practice.png)
 
 #### Evidence of app idea brainstorming session
-![](./docs/)
+![Brain_Storm](./docs/Brain_Storm.png)
 #### User stories
 
    As a player,I want to roll the dice, so that I can move around the game board. As a player, I want to see the board to track the game flow. As a player,I want to buy a property off the board to invest my in-game money to win the game. As a player,I want to upgrade my property in order to invest more in promising property. As aplayer,I want to be able bribe my way out of the jail, in which way I could be freedom and have chance to win the game. As aplayer,I want to be able to choose which tiles to go when I land on Free Parking. So that there will be more control in the game and less randomization.
