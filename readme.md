@@ -526,7 +526,9 @@ We haven't work on the go system which  they collect $200 when they pass GO, and
 
 
 #### User stories
-   As aplayer,I wantto roll the diceso thatI can move around the game board. As aplayer,I wantto see the boardso thatI can track the game flow.As aplayer,I wantto buy a property off the board so thatI can invest my in-game money to win the game.As aplayer,I wantto upgrade my propertyso thatI can invest more in promising property.As aplayer,I wantto be able bribe my way out of the jailso thatI have more way to strategize to win the game.As aplayer,I wantto be able to choose which tiles to go when I land on Free Parkingso thatthere will be more control in the game and less randomization
+```
+   As a player,I want to roll the dice, so that I can move around the game board. As a player,I wantt o see the board,so that I can track the game flow. As aplayer,I wan tto buy a property off the board so thatI can invest my in-game money to win the game.As aplayer,I wantto upgrade my propertyso thatI can invest more in promising property.As aplayer,I wantto be able bribe my way out of the jailso thatI have more way to strategize to win the game.As aplayer,I wantto be able to choose which tiles to go when I land on Free Parkingso thatthere will be more control in the game and less randomization
+   ```
    
 ### Patent Related Topic
    ___
