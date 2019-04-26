@@ -4,7 +4,7 @@
 
 **Project purpose** : This game is made to implement the practice in building a ruby terminal app and get a better understanding                                       of class, method, loops, and application of ruby gem packages.We create the Monopoly in ruby to use innovation skill to explore ruby and simulate the game system. I could use it for the maintainance and practical operation.
 
-**Project link** : This is our project link [Click me please](.)
+**Project link** : This is our project link [Click me please](https://github.com/sukibeww/monopoly-terminal/blob/master/monopoly.rb)
 
 #### Project flow :
 
