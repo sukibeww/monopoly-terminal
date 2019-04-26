@@ -6,11 +6,16 @@
 
 **Project link** : This is our project link [Click me please](.)
 
-**Project plan and Timeline** :
+#### Project flow and Timeline 
 
+![task_flow](./docs/Project_work_flow.png)  
 
+##### Timeline 
 
-___
+| Date |18/04/19|19/04/19|20/04/19|21/04/19|22/04/19|23/04/19|24/04/19|25/04/19|26/04/19|
+| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
+| Brandon | Brain Storm | Projct Planing | Player Class| Game Setting  | Chance feature | Community Feature | More_Game Features | Readme | Readme |
+| Suki | Brain Storm | Projct Planing | Jail Feature | GameBoard Displaye | Tile System | Tile System | Players Movement | Debug | Final Review |
 
 
 ### Game board, Tile and Players Movement
@@ -19,8 +24,7 @@ Tile is a basic and significant element in our game, the game board is a circle 
 
 
 ##### Game board property tiles
-> blockquote
-	`code`
+
 ```
 board = [
     start,
@@ -55,6 +59,10 @@ jail = Jail.new()
 pass_jail = Jail.new() 
 free_parking = FreeParking.new() 
 ```
+##### GameBoard Display
+
+![Game_Board](./docs/GameBoard.png)
+
 ##### Tiles Build 
 
 ```
