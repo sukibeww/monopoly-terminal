@@ -69,6 +69,7 @@ chance.board = board
 chance_2.board = board
 free_parking.board = board
 jail.board = board 
+start.board = board 
 
 
 
@@ -273,24 +274,53 @@ def game(player_list, board)
         board[0].move_in(player) 
     end 
     display_map(board)
-    while(current_player.length > 1) 
+    bankrupt_counter = 0 
+    while(bankrupt_counter != 3) 
         current_player.each do |player|
             player.player_stat() 
-            if(player.jail_status == false)
+            bankrupt_counter = 0 
+            if(player.jail_status == false && player.bankrupt == false)
                 origin = player.location
                 player.toss_dice() 
                 destination = player.location 
                 board[destination].move_in(player)
                 player.location = destination 
                 board[destination].tile_reader(player)
-                board[origin].move_out(player)
+                if(origin != player.location) 
+                    board[origin].move_out(player)
+                else 
+                    board[origin].move_in(player)
+                end 
+                if(player.bankrupt)
+                    board.each do |tile|
+                        if(tile.is_a? Property)
+                            if(tile.owner == player)
+                                tile.owner = nil 
+                            end 
+                        end 
+                    end 
+                end 
                 display_map(board)
             else
                 player.bribe?() 
             end 
+            current_player.each do |player|
+                if(player.bankrupt)
+                    bankrupt_counter += 1 
+                end 
+            end 
+            # puts "bankrupt player : #{bankrupt_counter}"
+            if bankrupt_counter == 3 
+                break 
+            end 
         end 
     end 
-    puts "#{current_player[0]} is the winner ! "
+    current_player.each do |player|
+        bankrupt_counter = 0 
+        if(player.bankrupt == false) 
+            puts "#{player.name} is the winner!"
+        end 
+    end 
 end 
 
 def concatenate_map(current_display, next_tile)

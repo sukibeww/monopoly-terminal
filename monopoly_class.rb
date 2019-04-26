@@ -6,7 +6,7 @@ class Player
     def initialize(name)
         @@player_counter += 1
         @name = name
-        @money = 2000
+        @money = 1000
         @property = {}
         @jail_status = false
         @jail_time = 0
@@ -16,23 +16,21 @@ class Player
     end
 
     def player_stat()
-        puts "Player name : #{@name}"
-        puts "Player money : #{@money}"
-<<<<<<< HEAD
-        if (@jail_status == true)
-            puts "Jail status : #{@jail_status}"
-            puts "Jail time = #{@jail_time}"
+        if(@bankrupt == false)
+            puts "Player name : #{@name}"
+            puts "Player money : #{@money}"
+            if (@jail_status == true)
+                puts "Jail status : #{@jail_status}"
+                puts "Jail time = #{@jail_time}"
+            end 
+        else 
+            puts "#{@name} already bankrupt"
         end 
     end 
-=======
-        puts "Jail status : #{@jail_status}"
-        puts "Jail time = #{@jail_time}"
-    end
->>>>>>> 432bc8ce9e7ebfc7baec70412f9684a6fa879a32
 
     def lap()
         puts "LAP! you earn $500"
-        @money += 500
+        @money += 100
         player_stat()
     end
 
@@ -68,7 +66,7 @@ class Player
     def toss_dice()
         prompt = TTY::Prompt.new()
         prompt.select("#{@name}'s turn'", %w(Roll!))
-        random_dice = 3 #rand(1..6)
+        random_dice = rand(1..6)
         puts "You rolled #{random_dice}"
         @location += random_dice
         if(@location >= 23)
@@ -84,8 +82,9 @@ class Player
             @money -= property.rent
             property.owner.money += property.rent
         else
+            puts "Property owned by #{property.owner.name}, the rent cost #{property.rent}"
             prompt.select("You do not have enough money.", %w(Bankrupt))
-            @bankrupt = true
+            @bankrupt = true 
         end
     end
 
@@ -94,7 +93,6 @@ class Player
         @jail_time = 2
         @location = 18
     end
-
 end
 
 class Tile
@@ -135,27 +133,7 @@ class Tile
             property_menu(self, player)
         elsif self.is_a? Start
             prompt.select("You arrrived at the Start", %w(Continue))
-        elsif self.is_a? Chance
-            prompt.select("You arrrived at the Chance", %w(Continue))
-            self.read(player)
-        elsif self.is_a? CommunityChest
-            prompt.select("You arrrived at the Community Chest", %w(Continue))
-            self.read(player)
-        elsif self.is_a? Jail
-            prompt.select("You arrrived at the Jail", %w(Continue))
-            self.check_index(player)
-        elsif self.is_a? FreeParking
-            prompt.select("You arrrived at the Free Parking", %w(Continue))
-            self.free_parking(player)
-        end
-    end
-
-    def tile_reader(player)
-        prompt = TTY::Prompt.new()
-        if self.is_a? Property
-            property_menu(self, player)
-        elsif self.is_a? Start
-            prompt.select("You arrrived at the Start", %w(Continue))
+            board[player.location].move_in(player)
         elsif self.is_a? Chance
             prompt.select("You arrrived at the Chance", %w(Continue))
             self.read(player)
@@ -197,7 +175,7 @@ class Property < Tile
             @buy_cost += @buy_cost
             @tier += 1
         else
-            puts "Not enought money"
+            puts "Not enough money"
         end
     end
 
@@ -257,6 +235,7 @@ class Chance < Tile
         else
             puts "You don't have enough money"
             player.bankrupt = true
+            pla 
         end
     end
 
@@ -319,7 +298,7 @@ class CommunityChest < Tile
             player.money -= 200
         else
             puts "Not enough money"
-            player.bankrupt = true
+            player.bankrupt = true 
         end
     end
 
@@ -337,6 +316,7 @@ class CommunityChest < Tile
         else
             puts "Not enough money"
             player.bankrupt = true
+            pla
         end
     end
 
@@ -350,14 +330,18 @@ class CommunityChest < Tile
         else
             puts "Not enough money"
             player.bankrupt = true
+            pla
         end
     end
 end
 
 class Start < Tile
 
+    attr_accessor :board
+
     def initialize()
         super()
+        @board = []
     end
 
 end
