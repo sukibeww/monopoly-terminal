@@ -10,7 +10,7 @@
 
 ![task_flow](./docs/Project_work_flow.png)  
 
-##### Timeline 
+#### Timeline :
 
 | Date |18/04/19|19/04/19|20/04/19|21/04/19|22/04/19|23/04/19|24/04/19|25/04/19|26/04/19|
 | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
@@ -546,5 +546,9 @@ We haven't work on the go system which  they collect $200 when they pass GO, and
 - [ ] Design considerations and choices
 - [x] Screenshots of Trello board(s)
 
-Thanks for watching [^1]
 ![Pikachu](https://seeklogo.com/images/P/pikachu-logo-42CAFBCD00-seeklogo.com.png) 
+Content [^1]
+
+[^1]: Hi! This is a footnote
+
+
