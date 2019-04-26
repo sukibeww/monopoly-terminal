@@ -14,8 +14,8 @@
 
 | Date |18/04/19|19/04/19|20/04/19|21/04/19|22/04/19|23/04/19|24/04/19|25/04/19|26/04/19|
 | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
-| Brandon | Brain Storm | Projct Planing | Player Class| Game Setting  | Chance feature | Community Feature | More_Game Features | Readme | Readme |
-| Suki | Brain Storm | Projct Planing | Jail Feature | GameBoard Displaye | Tile System | Tile System | Players Movement | Debug | Final Review |
+| Brandon | Brain Storm | Project Planing | Player Class| Game Setting  | Chance feature | Community Feature | More_Game Features | Readme | Readme |
+| Suki | Brain Storm | Project Planing | Jail Feature | GameBoard Displaye | Tile System | Tile System | Players Movement | Debug | Final Review |
 
 
 ### Game board, Tiles and Players Movement
