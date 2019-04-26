@@ -87,7 +87,7 @@ owner: #{temp_id}
                 """
             end 
 ```
-When a player land on the tiles, the tile would contain player on the display. eg. line 1
+##### When a player land on the tiles, the tile would contain player on the display. eg. line 1
 
 ```
 board.each do |tile| 
@@ -195,7 +195,7 @@ gold_coast = Property.new("Gold Coast", 440, "GCS")
 white_sundays = Property.new("White Sundays", 460, "WHS")
 sydney = Property.new("Sydney", 500, "SYD")
 ```
-##### buy property
+##### Property Perchase
 
 ```
 ef property_menu(property, player)
@@ -527,13 +527,16 @@ We haven't work on the go system which  they collect $200 when they pass GO, and
  
 ![Trello](./docs/Trello_Practice.png)
 
-
+#### Evidence of app idea brainstorming session
+![](./docs/)
 #### User stories
-```
+
    As a player,I want to roll the dice, so that I can move around the game board. As a player, I want to see the board to track the game flow. As a player,I want to buy a property off the board to invest my in-game money to win the game. As a player,I want to upgrade my property in order to invest more in promising property. As aplayer,I want to be able bribe my way out of the jail, in which way I could be freedom and have chance to win the game. As aplayer,I want to be able to choose which tiles to go when I land on Free Parking. So that there will be more control in the game and less randomization.
-```
+
    
-### Potential legal, moral, ethical, cultural and safety issues
+#### Potential legal, moral, ethical, cultural and safety issues
+
+we had a concern regarding the offence to the monopoly board game patent. Certainly monopoly is trademarked because it is a comercial product, some of the game mechanics is patented. And art of the game board and cards are protected by copyright. But I think I would be OK because this terminal app is local and also it's not used for profit, we just use to techical learning and practice. Plus our game is not 100% same to the origninal monopoly game. We are making our own art. So we think we can just get away from too much concern about it.
    ___
    
  * Description of the app
@@ -548,7 +551,7 @@ We haven't work on the go system which  they collect $200 when they pass GO, and
 - [x] User stories
 - [x] Project plan & timeline
 - [x] Description of overall app design (classes, files, basic flow)
-- [x] Screenshots of Trello board(s)
+- [x] Screenshots of Trello board
 
 Thanks for Watching !
 ![Pikachu](https://seeklogo.com/images/P/pikachu-logo-42CAFBCD00-seeklogo.com.png) 
