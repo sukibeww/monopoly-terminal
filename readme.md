@@ -1,10 +1,10 @@
 # Brandon and Suki Project
 
-**Project name** : Monopoly_in_ruby
+##### Project name : Monopoly_in_ruby
 
-**Project purpose** : This game is made to implement the practice in building a ruby terminal app and get a better understanding                                       of class, method, loops, and application of ruby gem packages.We create the Monopoly in ruby to use innovation skill to explore ruby and stimulate the game system.
+##### Project purpose : This game is made to implement the practice in building a ruby terminal app and get a better understanding                                       of class, method, loops, and application of ruby gem packages.We create the Monopoly in ruby to use innovation skill to explore ruby and stimulate the game system.
 
-**Project link** : This is our project link [Click me please](.)
+##### Project link : This is our project link [Click me please](.)
 
 ___
 
@@ -14,7 +14,7 @@ ___
 Tile is a basic and significant element in our game, the game board is a circle made of tiles. Tile is like ground block for player's token to land on. There are 6 types of tile : Property, Start, Jail, Freeparking, chance and community chest. Each of them has different few functionalities in the game. when the player land on the particular tile. Something would happen to the player. 
 
 
-#### Game board property tiles
+##### Game board property tiles
 > blockquote
 	`code`
 ```
@@ -51,7 +51,7 @@ jail = Jail.new()
 pass_jail = Jail.new() 
 free_parking = FreeParking.new() 
 ```
-Tiles Build 
+##### Tiles Build 
 
 ```
 def display_tile(tile)
@@ -87,12 +87,12 @@ board.each do |tile|
         counter += 1 
     end 
 ```
-**Game Setting**
+### Game Setting
 
 this terminal app simulate a monopoly game of 4 player , at the start of the game, each player is given a certain amount of money of $2000 and a token, token represent the player body on the gameboard. then player must roll the dice and move their token. after that they forward the number of spaces as  rolled on the dice. after player have completed their play, the tokens remain on the spaces occupied and proceed from that point on the player's next turn.
     According to the space your token reaches, you may be entitled to buy real estate which is called property in our Monopoly_in_ruby, or be obliged to pay rent, draw a Chance or Community Chest card. " Go to Jain", etc.
     
-name of each player and each player is given amount of money
+##### Name of each player and each player is given amount of money
 ```
 player1 = Player.new("suki")
 player2 = Player.new("brandon")
@@ -118,7 +118,7 @@ class Player
     end
 ```
     
-Player movement setting
+##### Player movement setting
 ```
 
 def game(player_list, board) 
@@ -156,12 +156,12 @@ end
 
 game(player_list, board) 
 ```
-#### Features in Monopoly_in_ruby
+### Features in Monopoly_in_ruby
 
-**Perchase Property:**
+#### Property:
 
    If the player lands on an unowned property, the player may buy it for the price listed on that property's space. If they agree to buy it, they pay the Bank the amount shown on the property space and receives the deed for that property. If they refuse to buy the property for the amount stated on the deed, the property is auctioned. Bidding may start at any price, and all players may bid. The highest bidder wins the property and pays the Bank the amount bid and receives the property's title deed. Railroads and utilities are also considered properties.
-   Property names , Abbreviation and Cost
+   ##### Property names , Abbreviation and Cost
 ```
 darwin = Property.new("Darwin", 100, "DRW")
 alice_spring = Property.new("Alice Spring", 120, "ASP")
@@ -180,7 +180,7 @@ gold_coast = Property.new("Gold Coast", 440, "GCS")
 white_sundays = Property.new("White Sundays", 460, "WHS")
 sydney = Property.new("Sydney", 500, "SYD")
 ```
-buy property
+##### buy property
 
 ```
 ef property_menu(property, player)
@@ -207,7 +207,7 @@ ef property_menu(property, player)
     end 
 end 
 ```
-**Property Rent**
+#### Property Rent
 
    If the player lands on an unmortgaged property owned by another player, they pay rent to that person, as specified on the property's deed. It is the property owner's responsibility to demand rent, and they have until the beginning of the second following player's turn to do so.
    If the player lands on their own property, or on property which is owned by another player but currently mortgaged, nothing happens.
@@ -226,9 +226,11 @@ def rent(property)
         end
     end
 ```
-**Chance and Community Chest Feature**
+#### Chance and Community Chest Feature
 
    If the player lands on a Chance or Community Chest, the player takes a card from the top of the respective pack and performs the instruction given on the card.
+   
+ ##### Chance  
 ```
 class Chance < Tile
     attr_accessor :random_chance, :board
@@ -306,7 +308,7 @@ class Chance < Tile
     end
 end
 ```
-
+##### Community_Chest
 ```
 class CommunityChest < Tile
 
@@ -503,7 +505,7 @@ end
 
 **Few systems that we need to do in future**
 
-we haven't work on the go system which  they collect $200 when they pass GO, and either does the income tax system that collect the percentage system they earn each 10 turns, house selling system, hotel system, and stock system. who throw dice first system, mortgages system
+We haven't work on the go system which  they collect $200 when they pass GO, and either does the income tax system that collect the percentage system they earn each 10 turns, house selling system, hotel system, and stock system. who throw dice first system, mortgages system
 
 #### Team Works
  we break down our project into tasks and we use trello to manage our tasks. we work togeter remotly and effiently thanks for the trello and github. We push and pull the files before we update it on our local and push it on the github after we make change on it.
@@ -513,4 +515,5 @@ we haven't work on the go system which  they collect $200 when they pass GO, and
 - [x] Write the press release
 - [ ] Update the website
 - [ ] Contact the media
+
 [^1]: Thanks for watching
