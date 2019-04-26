@@ -330,3 +330,14 @@ def concatenate_map(current_display, next_tile)
 end 
 
 game(player_list, board) 
+
+
+#Testing 
+# tester = Player.new("Tester")
+# tester.test_toss_dice() 
+# tester.test_buy_property_1(darwin) 
+# tester.test_buy_property_2(darwin) 
+# tester2 = Player.new("Tester2") 
+# tester2.test_rent(darwin) 
+
+

@@ -29,7 +29,7 @@ class Player
     end 
 
     def lap()
-        puts "LAP! you earn $500"
+        puts "LAP! you earn $100"
         @money += 100
         player_stat()
     end
@@ -63,6 +63,33 @@ class Player
         end
     end
 
+    def test_buy_property_1(property)
+        #positive testing 
+        puts "1. sufficient money and property ownership test"
+        original_money = @money 
+        original_number_of_property_owned = @property.length
+        buy_property(property) 
+        if(original_money > @money && property.owner == self && original_number_of_property_owned < @property.length)
+            puts "Passed"
+        else 
+            puts "False"
+        end 
+    end 
+
+    def test_buy_property_2(property)
+        #positive testing 
+        puts "2. insuffcient money property purchase test" 
+        original_number_of_property_owned = @property.length
+        @money = 10 
+        original_money = @money 
+        buy_property(property)
+        if(original_money == @money && @property.length == original_number_of_property_owned)
+            puts "Passed"
+        else 
+            puts "False"
+        end 
+    end 
+
     def toss_dice()
         prompt = TTY::Prompt.new()
         prompt.select("#{@name}'s turn'", %w(Roll!))
@@ -74,6 +101,42 @@ class Player
             lap()
         end
     end
+            
+    def test_toss_dice()
+        original_location = @location
+        toss_dice() 
+        #positive testing
+        puts "1. Toss dice and movement testing"
+        if(@location != original_location)
+            puts "Passed"
+        else 
+            puts "False"
+        end 
+    
+        puts "2. Toss dice RND range testing" 
+        #reset self location 
+        @location = 0 
+        self_location_before = @location
+        toss_dice() 
+        self_location_after = @location 
+        dice_range = self_location_after - self_location_before
+        if(dice_range >= 1 && dice_range <= 6)
+            puts "Passed"
+        else 
+            puts "False" 
+        end 
+        
+        #negative testing 
+        puts "3. Toss dice - lap function integration "
+        self.location = 23 
+        self_orignal_money = self.money
+        toss_dice() 
+        if(self.location > 23 && self.money == self_orignal_money)
+            puts "False"
+        else 
+            puts "Passed"
+        end 
+    end  
 
     def rent(property)
         prompt = TTY::Prompt.new()
@@ -87,6 +150,29 @@ class Player
             @bankrupt = true 
         end
     end
+
+    def test_rent(property)
+        puts "1. Rent balance tester" 
+        original_money = @money 
+        original_owner_money = property.owner.money 
+        rent(property) 
+        if(original_money < @money && original_owner_money < property.owner.money)
+            puts "Passed" 
+        else 
+            puts "False"
+        end 
+
+        puts "2. insufficent money rent bankrupt trigger tester" 
+        @money = 10 
+        original_money = @money 
+        original_owner_money = property.owner.money 
+        rent(property) 
+        if(@money == original_money && property.owner.money == original_owner_money && @bankrupt)
+            puts "Passed"
+        else 
+            puts "False"
+        end 
+    end 
 
     def go_to_jail()
         @jail_status = true
