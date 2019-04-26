@@ -503,7 +503,7 @@ class FreeParking < Tile
 end
 ```
 
-**Few systems that we need to do in future**
+**Future enhancements**
 
 We haven't work on the go system which  they collect $200 when they pass GO, and either does the income tax system that collect the percentage system they earn each 10 turns, house selling system, hotel system, and stock system. who throw dice first system, mortgages system
 
@@ -512,8 +512,24 @@ We haven't work on the go system which  they collect $200 when they pass GO, and
  
 ![Trello](./docs/Trello_Practice.png)
 
-- [x] Write the press release
-- [ ] Update the website
-- [ ] Contact the media
 
+#### User stories
+   As aplayer,I wantto roll the diceso thatI can move around the game board. As aplayer,I wantto see the boardso thatI can track the game flow.As aplayer,I wantto buy a property off the board so thatI can invest my in-game money to win the game.As aplayer,I wantto upgrade my propertyso thatI can invest more in promising property.As aplayer,I wantto be able bribe my way out of the jailso thatI have more way to strategize to win the game.As aplayer,I wantto be able to choose which tiles to go when I land on Free Parkingso thatthere will be more control in the game and less randomization
+   ___
+   
+ * Description of the app
+- [x] Project Purpose
+- [x] Project Functionality
+- [x] Screenshots
+- [x] Future enhancements
+- [ ] Accessibility concerns
+- [ ] Potential legal, moral, ethical, cultural and safety issues
+- [ ] Possible social, political, cultural, racial, gender andinternational issues
+ * Details of design & planning process
+- [ ] Evidence of app idea brainstorming session
+- [ ] User stories
+- [ ] Project plan & timeline
+- [ ] Description of overall app design (classes, files, basic flow)
+- [ ] Design considerations and choices
+- [x] Screenshots of Trello board(s)
 [^1]: Thanks for watching
