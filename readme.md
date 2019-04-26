@@ -2,9 +2,13 @@
 
 **Project name** : Monopoly_in_ruby
 
-**Project purpose** : This game is made to implement the practice in building a ruby terminal app and get a better understanding                                       of class, method, loops, and application of ruby gem packages.We create the Monopoly in ruby to use innovation skill to explore ruby and stimulate the game system.
+**Project purpose** : This game is made to implement the practice in building a ruby terminal app and get a better understanding                                       of class, method, loops, and application of ruby gem packages.We create the Monopoly in ruby to use innovation skill to explore ruby and simulate the game system. I could use it for the maintainance and practical operation.
 
 **Project link** : This is our project link [Click me please](.)
+
+**Project plan and Timeline** :
+
+
 
 ___
 
@@ -515,6 +519,8 @@ We haven't work on the go system which  they collect $200 when they pass GO, and
 
 #### User stories
    As aplayer,I wantto roll the diceso thatI can move around the game board. As aplayer,I wantto see the boardso thatI can track the game flow.As aplayer,I wantto buy a property off the board so thatI can invest my in-game money to win the game.As aplayer,I wantto upgrade my propertyso thatI can invest more in promising property.As aplayer,I wantto be able bribe my way out of the jailso thatI have more way to strategize to win the game.As aplayer,I wantto be able to choose which tiles to go when I land on Free Parkingso thatthere will be more control in the game and less randomization
+   
+### Patent Related Topic
    ___
    
  * Description of the app
@@ -522,15 +528,15 @@ We haven't work on the go system which  they collect $200 when they pass GO, and
 - [x] Project Functionality
 - [x] Screenshots
 - [x] Future enhancements
-- [ ] Accessibility concerns
 - [ ] Potential legal, moral, ethical, cultural and safety issues
 - [ ] Possible social, political, cultural, racial, gender andinternational issues
  * Details of design & planning process
 - [ ] Evidence of app idea brainstorming session
-- [ ] User stories
+- [x] User stories
 - [ ] Project plan & timeline
 - [ ] Description of overall app design (classes, files, basic flow)
 - [ ] Design considerations and choices
 - [x] Screenshots of Trello board(s)
 
-[^1]: Thanks for watching
+Thanks for watching [^1]
+![Pikachu](https://seeklogo.com/images/P/pikachu-logo-42CAFBCD00-seeklogo.com.png) 
