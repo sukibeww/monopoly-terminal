@@ -1,10 +1,10 @@
 # Brandon and Suki Project
 
-##### Project name : Monopoly_in_ruby
+**Project name** : Monopoly_in_ruby
 
-##### Project purpose : This game is made to implement the practice in building a ruby terminal app and get a better understanding                                       of class, method, loops, and application of ruby gem packages.We create the Monopoly in ruby to use innovation skill to explore ruby and stimulate the game system.
+**Project purpose** : This game is made to implement the practice in building a ruby terminal app and get a better understanding                                       of class, method, loops, and application of ruby gem packages.We create the Monopoly in ruby to use innovation skill to explore ruby and stimulate the game system.
 
-##### Project link : This is our project link [Click me please](.)
+**Project link** : This is our project link [Click me please](.)
 
 ___
 
@@ -532,4 +532,5 @@ We haven't work on the go system which  they collect $200 when they pass GO, and
 - [ ] Description of overall app design (classes, files, basic flow)
 - [ ] Design considerations and choices
 - [x] Screenshots of Trello board(s)
+
 [^1]: Thanks for watching
