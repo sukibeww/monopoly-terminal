@@ -1,4 +1,4 @@
-# Brandon and Suki Project
+# Monopoly-terminal Project
 
 **Project name** : Monopoly_in_ruby
 
